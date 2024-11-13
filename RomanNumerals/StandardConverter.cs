@@ -27,7 +27,7 @@ namespace RomanNumerals
             var prevChar = ' ';
             foreach (var character in numerals.ToUpper())
             {
-                var charValue = GetIntFromChar(character) ?? throw new InvalidCastException();
+                var charValue = GetIntFromChar(character) ?? throw new ArgumentException();
                 count += charValue;
                 // have to remove twice the value of the previous char if it is
                 // a subtractive character, since we also added the value of the
@@ -51,18 +51,14 @@ namespace RomanNumerals
             {
                 var value = _values[i];
                 var count = number / value.number;
-                if (count == 0)
+
+                if (count == 1 &&!IsPowerOfTen(value.numeral) && number / _values[i + 1].number == 9)
                 {
-                    if (IsPowerOfTen(value.numeral) && number / _values[i + 2].number == 9)
-                    {
-                        var tenth = _values[i + 2];
-                        builder.Append(tenth.numeral);
-                        builder.Append(value.numeral);
-                        number -= tenth.number * 9;
-                    }
-                    continue;
+                    builder.Append(_values[i + 1].numeral);
+                    builder.Append(_values[i - 1].numeral);
+                    number -= _values[i + 1].number * 9;
                 }
-                if (count == 4)
+                else if (count == 4)
                 {
                     builder.Append(value.numeral);
                     builder.Append(_values[i - 1].numeral);
@@ -120,6 +116,7 @@ namespace RomanNumerals
                 'M' => true,
                 'C' => true,
                 'X' => true,
+                'I' => true,
                 _ => false
             };
     }

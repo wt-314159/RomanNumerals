@@ -47,6 +47,7 @@ namespace RomanNumerals.Testing
                 new object[] { "CDXXXIII", 433 },
                 new object[] { "CMLXXIV", 974 },
                 new object[] { "CMXCIX", 999 },
+                new object[] { "MCMXCV", 1995 },
             };
         }
 
@@ -60,7 +61,7 @@ namespace RomanNumerals.Testing
         [DynamicData(nameof(InvalidNumerals))]
         public void TestThrowsException(string invalidRomanNumerals)
         {
-            Assert.ThrowsException<InvalidCastException>(() => 
+            Assert.ThrowsException<ArgumentException>(() => 
                 _testObject.FromRomanNumerals(invalidRomanNumerals));
         }
 
