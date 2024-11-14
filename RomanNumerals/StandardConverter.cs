@@ -40,7 +40,7 @@ namespace RomanNumerals
 
         public string ToRomanNumerals(int number)
         {
-            if (number < 1 || number > 4000)
+            if (number < 1 || number >= 4000)
             {
                 throw new ArgumentOutOfRangeException();
             }
